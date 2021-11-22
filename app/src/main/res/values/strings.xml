@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">tp4mobileGwenaelGalliot</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_vendeur">Vendeur</string>
+    <string name="title_panier">Panier</string>
     <string name="title_notifications">Notifications</string>
 </resources>
