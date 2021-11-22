@@ -1,4 +1,4 @@
-package com.example.tp4mobilegwenaelgalliot.ui.home;
+package com.example.tp4mobilegwenaelgalliot.ui.Vendeur;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,27 +12,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tp4mobilegwenaelgalliot.R;
-import com.example.tp4mobilegwenaelgalliot.databinding.FragmentHomeBinding;
+import com.example.tp4mobilegwenaelgalliot.databinding.FragmentVendeurBinding;
 
-public class HomeFragment extends Fragment {
+public class ClientFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
+    private VendeurViewModel clientViewModel;
+    private FragmentVendeurBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        clientViewModel =
+                new ViewModelProvider(this).get(VendeurViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentVendeurBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        clientViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
             }
         });
         return root;

@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/gweng/OneDrive/Bureau/Session ete 21/tp4mobileGwenaelGalliot/app/src/main/res/layout/activity_connection.xml" value="0.18432971014492755" />
         <entry key="..\:/Users/gweng/OneDrive/Bureau/Session ete 21/tp4mobileGwenaelGalliot/app/src/main/res/layout/activity_main.xml" value="0.2672239108409321" />
+        <entry key="..\:/Users/gweng/OneDrive/Bureau/Session ete 21/tp4mobileGwenaelGalliot/app/src/main/res/layout/fragment_notifications.xml" value="0.18432971014492755" />
+        <entry key="..\:/Users/gweng/OneDrive/Bureau/Session ete 21/tp4mobileGwenaelGalliot/app/src/main/res/layout/fragment_vendeur.xml" value="0.18432971014492755" />
       </map>
     </option>
   </component>
