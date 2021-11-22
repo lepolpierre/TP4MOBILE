@@ -14,20 +14,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp4mobilegwenaelgalliot.databinding.FragmentVendeurBinding;
 
-public class ClientFragment extends Fragment {
+public class VendeurFragment extends Fragment {
 
-    private VendeurViewModel clientViewModel;
+    private VendeurViewModel vendeurViewModel;
     private FragmentVendeurBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        clientViewModel =
+        vendeurViewModel =
                 new ViewModelProvider(this).get(VendeurViewModel.class);
 
         binding = FragmentVendeurBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        clientViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        vendeurViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
             }
