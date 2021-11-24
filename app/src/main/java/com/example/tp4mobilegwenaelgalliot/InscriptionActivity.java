@@ -3,6 +3,7 @@ package com.example.tp4mobilegwenaelgalliot;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,8 @@ public class InscriptionActivity extends AppCompatActivity {
 
     private ActivityInscriptionBinding binding;
     private FirebaseAuth mAuth;
+
+
 
     private static final String TAG = "***SignUp";
 
@@ -42,12 +45,19 @@ public class InscriptionActivity extends AppCompatActivity {
         }
 
         // Création de compte
-//        binding.buttonSignup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                createAccount(binding.editTextTextPersonName.getText().toString(), binding.editTextTextEmail.getText().toString(), binding.editTextTextPassword.getText().toString());
-//            }
-//        });
+        binding.buttonSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createAccount(binding.editTextTextPersonName.getText().toString(), binding.editTextTextEmail.getText().toString(), binding.editTextTextPassword.getText().toString());
+            }
+        });
+
+        binding.buttonDejaInscrit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(InscriptionActivity.this, ConnectionActivity.class));
+            }
+        });
     }
 
     // Inscription
@@ -62,6 +72,10 @@ public class InscriptionActivity extends AppCompatActivity {
                             // Succès, on a désormais accès a l'objet utilisateur
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent;
+                            intent = new Intent(InscriptionActivity.this, ConnectionActivity.class);
+                            startActivity(intent);
+
 
                             // Mais on peut construire un profil associé à un utilisateur
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -94,9 +108,10 @@ public class InscriptionActivity extends AppCompatActivity {
     }
 
     private void updateUi(FirebaseUser user) {
-        // token retourné par Firebase : utile si on doit par la suite communiquer avec un backend tierce
-        //binding.textView5.setText("Bienvenue "+user.getIdToken(true));
 
+//        // token retourné par Firebase : utile si on doit par la suite communiquer avec un backend tierce
+//        binding.textView5.setText("Bienvenue "+user.getIdToken(true));
+//
 //        binding.textView5.setText("Bienvenue "+user.getDisplayName());
 //
 //        if (user.isEmailVerified()) binding.textView6.setText("Courriel vérifié");

@@ -1,5 +1,6 @@
 package com.example.tp4mobilegwenaelgalliot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,18 +37,22 @@ public class ConnectionActivity extends AppCompatActivity {
 
         // Si token user déjà valide
         if (mAuth.getCurrentUser() != null) {
-            Log.d(TAG, "onCreate: " + mAuth.getCurrentUser());
-            Toast.makeText(this, "Vous êtes déjà connecté.", Toast.LENGTH_SHORT).show();
-            updateUi(mAuth.getCurrentUser());
+//            Log.d(TAG, "onCreate: " + mAuth.getCurrentUser());
+//            Toast.makeText(this, "Vous êtes déjà connecté.", Toast.LENGTH_SHORT).show();
+//            updateUi(mAuth.getCurrentUser());
+
+            Intent intent;
+            intent = new Intent(ConnectionActivity.this, MainActivity.class);
+            startActivity(intent);
         }
 
         // Connexion
-//        binding.buttonConnexion.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                signIn(binding.editTextTextEmail.getText().toString(), binding.editTextTextPassword.getText().toString());
-//            }
-//        });
+        binding.buttonConnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn(binding.editTextTextEmail.getText().toString(), binding.editTextTextPassword.getText().toString());
+            }
+        });
     }
 
     private void signIn(String courriel, String mdp) {
@@ -63,6 +68,10 @@ public class ConnectionActivity extends AppCompatActivity {
                             Toast.makeText(ConnectionActivity.this, "Connecté.",
                                     Toast.LENGTH_SHORT).show();
                             updateUi(user);
+
+                            Intent intent;
+                            intent = new Intent(ConnectionActivity.this, MainActivity.class);
+                            startActivity(intent);
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                         }
@@ -89,12 +98,12 @@ public class ConnectionActivity extends AppCompatActivity {
 
     private void updateUi(FirebaseUser user) {
         // token retourné par Firebase : utile si on doit par la suite communiquer avec un backend tierce
-        //binding.textView5.setText("Bienvenue "+user.getIdToken(true));
+        binding.textView5.setText("Bienvenue "+user.getIdToken(true));
 
-//        binding.textView5.setText("Bienvenue "+user.getDisplayName());
-//
-//        if (user.isEmailVerified() == true) binding.textView6.setText("Courriel vérifié");
-//        else binding.textView6.setText("Courriel non vérifié");
+        binding.textView5.setText("Bienvenue "+user.getDisplayName());
+
+        if (user.isEmailVerified() == true) binding.textView6.setText("Courriel vérifié");
+        else binding.textView6.setText("Courriel non vérifié");
     }
 
     @Override
