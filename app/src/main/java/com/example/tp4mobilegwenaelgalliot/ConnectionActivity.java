@@ -1,37 +1,105 @@
 package com.example.tp4mobilegwenaelgalliot;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import com.example.tp4mobilegwenaelgalliot.databinding.ActivityMainBinding;
+import com.example.tp4mobilegwenaelgalliot.databinding.ActivityConnectionBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ConnectionActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    ActivityConnectionBinding binding;
+    private FirebaseAuth mAuth;
+
+    private static final String TAG = "***SignIn";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityConnectionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        BottomNavigationView navView = findViewById(R.id.nav_view);
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-//                .build();
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-//        NavigationUI.setupWithNavController(binding.navView, navController);
+        // Instance du service d'authentification
+        mAuth = FirebaseAuth.getInstance();
+
+        // Si token user déjà valide
+        if (mAuth.getCurrentUser() != null) {
+            Log.d(TAG, "onCreate: " + mAuth.getCurrentUser());
+            Toast.makeText(this, "Vous êtes déjà connecté.", Toast.LENGTH_SHORT).show();
+            updateUi(mAuth.getCurrentUser());
+        }
+
+        // Connexion
+//        binding.buttonConnexion.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                signIn(binding.editTextTextEmail.getText().toString(), binding.editTextTextPassword.getText().toString());
+//            }
+//        });
     }
 
+    private void signIn(String courriel, String mdp) {
+
+        mAuth.signInWithEmailAndPassword(courriel, mdp)
+
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(ConnectionActivity.this, "Connecté.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUi(user);
+                        } else {
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        }
+                    }
+                })
+                // Ce callback nous permet d'avoir accès aux exceptions
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(ConnectionActivity.this, "Mot-de-Passe Incorrect.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else if (e instanceof FirebaseAuthInvalidUserException) {
+                            Toast.makeText(ConnectionActivity.this, "Adresse Courriel Incorrecte.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ConnectionActivity.this, "Échec de Connexion.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void updateUi(FirebaseUser user) {
+        // token retourné par Firebase : utile si on doit par la suite communiquer avec un backend tierce
+        //binding.textView5.setText("Bienvenue "+user.getIdToken(true));
+
+//        binding.textView5.setText("Bienvenue "+user.getDisplayName());
+//
+//        if (user.isEmailVerified() == true) binding.textView6.setText("Courriel vérifié");
+//        else binding.textView6.setText("Courriel non vérifié");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseAuth.getInstance().signOut();
+    }
 }
