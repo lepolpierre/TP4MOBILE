@@ -1,4 +1,4 @@
-package com.example.tp4mobilegwenaelgalliot.ui.Vendeur;
+package com.example.tp4mobilegwenaelgalliot.ui.Panier;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tp4mobilegwenaelgalliot.databinding.FragmentVendeurBinding;
+import com.example.tp4mobilegwenaelgalliot.databinding.FragmentClientBinding;
 
-public class VendeurFragment extends Fragment {
+public class PanierFragment extends Fragment {
 
-    private VendeurViewModel vendeurViewModel;
-    private FragmentVendeurBinding binding;
+    private PanierViewModel panierViewModel;
+    private FragmentClientBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        vendeurViewModel =
-                new ViewModelProvider(this).get(VendeurViewModel.class);
+        panierViewModel =
+                new ViewModelProvider(this).get(PanierViewModel.class);
 
-        binding = FragmentVendeurBinding.inflate(inflater, container, false);
+        binding = FragmentClientBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        vendeurViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textHome;
+        panierViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
+                //textView.setText(s);
             }
         });
         return root;

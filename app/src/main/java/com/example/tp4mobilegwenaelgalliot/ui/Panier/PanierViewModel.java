@@ -1,16 +1,16 @@
-package com.example.tp4mobilegwenaelgalliot.ui.Vendeur;
+package com.example.tp4mobilegwenaelgalliot.ui.Panier;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class VendeurViewModel extends ViewModel {
+public class PanierViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public VendeurViewModel() {
+    public PanierViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is vendeur fragment");
+        mText.setValue("This is client fragment");
     }
 
     public LiveData<String> getText() {
