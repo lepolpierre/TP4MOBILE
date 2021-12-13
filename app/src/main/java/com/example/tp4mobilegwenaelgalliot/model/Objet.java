@@ -4,9 +4,9 @@ public class Objet {
     private String nom;
     private String categorie;
     private Double prix;
-    private Number qtt;
+    private Integer qtt;
 
-    public Objet(String nom, String categorie, Double prix, Number qtt){
+    public Objet(String nom, String categorie, Double prix, Integer qtt){
      this.nom = nom;
      this.categorie = categorie;
      this.prix = prix;
@@ -42,5 +42,5 @@ public class Objet {
 
     public Number getQtt() {   return qtt; }
 
-    public void setQtt(Number qtt) {   this.qtt = qtt; }
+    public void setQtt(Integer qtt) {   this.qtt = qtt; }
 }

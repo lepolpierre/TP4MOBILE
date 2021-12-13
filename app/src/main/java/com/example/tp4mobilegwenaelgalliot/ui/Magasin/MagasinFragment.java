@@ -69,13 +69,9 @@ public class  MagasinFragment extends Fragment {
 
 
 
-
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         binding = FragmentMagasinBinding.inflate(getLayoutInflater());
-
         View view = binding.getRoot();
         return view;
     }
@@ -89,7 +85,6 @@ public class  MagasinFragment extends Fragment {
         binding.rvMagasin.setLayoutManager(new LinearLayoutManager(getContext()));
 
         panierViewModel = new ViewModelProvider(requireActivity()).get(PanierViewModel.class);
-
 
         objetAdapteur = new ObjetAdapteur(getActivity(),items,panierViewModel);
 
@@ -106,29 +101,18 @@ public class  MagasinFragment extends Fragment {
                     objet.setNom(document.getString(KEY_NAME));
                     objet.setCategorie(document.getString(KEY_CAT));
                     objet.setPrix(Double.parseDouble(document.getString(KEY_PRIX)));
-                    objet.setQtt(Double.parseDouble(document.getString(KEY_QTT)));
-
+                    objet.setQtt(Integer.parseInt(document.getString(KEY_QTT)));
 
                     // Ajout de l'Id créé par Firestore
 //                    objet.setId(document.getId());
 //                    last = document.getId();
                     last = document.getId();
                     items.add(objet);
-
                 }
+
                 objetAdapteur.notifyDataSetChanged();
-
-
-
-
-                Toast toast = Toast.makeText(getContext(), items.get(0).getNom(), Toast.LENGTH_SHORT);
-                toast.show();
             }
         });
-
-
-
-
 
 
         //  REMPLIR LA DATABASE
@@ -152,9 +136,7 @@ public class  MagasinFragment extends Fragment {
 //                        Log.w("TAG", "Error adding document", e);
 //                    }
 //                });
-
     }
-
 
 
     @Override

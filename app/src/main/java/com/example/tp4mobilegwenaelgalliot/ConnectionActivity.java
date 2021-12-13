@@ -67,7 +67,7 @@ public class ConnectionActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(ConnectionActivity.this, "Connecté.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUi(user);
+                            //updateUi(user);
 
                             Intent intent;
                             intent = new Intent(ConnectionActivity.this, MainActivity.class);
@@ -96,15 +96,15 @@ public class ConnectionActivity extends AppCompatActivity {
                 });
     }
 
-    private void updateUi(FirebaseUser user) {
-        // token retourné par Firebase : utile si on doit par la suite communiquer avec un backend tierce
-        binding.textView5.setText("Bienvenue "+user.getIdToken(true));
-
-        binding.textView5.setText("Bienvenue "+user.getDisplayName());
-
-        if (user.isEmailVerified() == true) binding.textView6.setText("Courriel vérifié");
-        else binding.textView6.setText("Courriel non vérifié");
-    }
+//    private void updateUi(FirebaseUser user) {
+//        // token retourné par Firebase : utile si on doit par la suite communiquer avec un backend tierce
+//        binding.textView5.setText("Bienvenue "+user.getIdToken(true));
+//
+//        binding.textView5.setText("Bienvenue "+user.getDisplayName());
+//
+//        if (user.isEmailVerified() == true) binding.textView6.setText("Courriel vérifié");
+//        else binding.textView6.setText("Courriel non vérifié");
+//    }
 
     @Override
     protected void onStop() {
