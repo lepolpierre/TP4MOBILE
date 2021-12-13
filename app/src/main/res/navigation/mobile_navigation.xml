@@ -15,7 +15,11 @@
         android:id="@+id/navigation_vendeur"
         android:name="com.example.tp4mobilegwenaelgalliot.ui.Magasin.MagasinFragment"
         android:label="@string/title_vendeur"
-        tools:layout="@layout/fragment_vendeur" />
+        tools:layout="@layout/fragment_magasin">
+        <action
+            android:id="@+id/action_navigation_vendeur_to_navigation_client"
+            app:destination="@id/navigation_client" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_client"

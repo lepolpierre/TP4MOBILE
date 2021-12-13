@@ -11,12 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.tp4mobilegwenaelgalliot.MainActivity;
 import com.example.tp4mobilegwenaelgalliot.ui.ObjetAdapteur;
-import com.example.tp4mobilegwenaelgalliot.databinding.FragmentVendeurBinding;
+import com.example.tp4mobilegwenaelgalliot.databinding.FragmentMagasinBinding;
 import com.example.tp4mobilegwenaelgalliot.databinding.VendeurRowBinding;
 import com.example.tp4mobilegwenaelgalliot.model.Objet;
+import com.example.tp4mobilegwenaelgalliot.ui.Panier.PanierViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -37,7 +40,7 @@ import java.util.Map;
 
 public class  MagasinFragment extends Fragment {
 
-    private FragmentVendeurBinding binding;
+    private FragmentMagasinBinding binding;
 
     private static final String KEY_NAME = "OBJET";
     private static final String KEY_CAT = "CATEGORIE";
@@ -62,13 +65,16 @@ public class  MagasinFragment extends Fragment {
 
     private ObjetAdapteur objetAdapteur;
 
+    private PanierViewModel panierViewModel;
+
+
 
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentVendeurBinding.inflate(getLayoutInflater());
+        binding = FragmentMagasinBinding.inflate(getLayoutInflater());
 
         View view = binding.getRoot();
         return view;
@@ -80,48 +86,15 @@ public class  MagasinFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.rvVendeur.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvMagasin.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        objetAdapteur = new ObjetAdapteur(getActivity(),items);
-
-        binding.rvVendeur.setAdapter(objetAdapteur);
+        panierViewModel = new ViewModelProvider(requireActivity()).get(PanierViewModel.class);
 
 
+        objetAdapteur = new ObjetAdapteur(getActivity(),items,panierViewModel);
 
+        binding.rvMagasin.setAdapter(objetAdapteur);
 
-//        Map<String, Object> objet = new HashMap<>();
-//        objet.put(KEY_NAME, "banane");
-//        objet.put(KEY_CAT, "fruit");
-//        objet.put(KEY_PRIX, "11.0");
-//        objet.put(KEY_QTT, "2");
-//        collection
-//                .add(objet)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference DocumentReference) {
-//                        Log.d("TAG", "DocumentSnapshot added with ID: ");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w("TAG", "Error adding document", e);
-//                    }
-//                });
-
-    }
-
-
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        /**
-         * Instanciation du listener : à collection donnée (ici, triée par priorité)
-         * Toute modification dans cette collection de la BD sera détéctée
-         * Traitée dans onEvent
-         */
         registration = collection.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -144,11 +117,45 @@ public class  MagasinFragment extends Fragment {
 
                 }
                 objetAdapteur.notifyDataSetChanged();
-                Toast toast = Toast.makeText(getContext(), items.toString(), Toast.LENGTH_SHORT);
+
+
+
+
+                Toast toast = Toast.makeText(getContext(), items.get(0).getNom(), Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
+
+
+
+
+
+
+        //  REMPLIR LA DATABASE
+
+//        Map<String, Object> objet = new HashMap<>();
+//        objet.put(KEY_NAME, "banane");
+//        objet.put(KEY_CAT, "fruit");
+//        objet.put(KEY_PRIX, "10.0");
+//        objet.put(KEY_QTT, "2");
+//        collection
+//                .add(objet)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference DocumentReference) {
+//                        Log.d("TAG", "DocumentSnapshot added with ID: ");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("TAG", "Error adding document", e);
+//                    }
+//                });
+
     }
+
+
 
     @Override
     public void onDestroyView() {
